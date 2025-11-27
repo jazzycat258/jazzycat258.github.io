@@ -4,18 +4,38 @@
     <meta charset="utf-8"/>
     <title>20:10 - JAZZYCAT258</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      .content-wrapper {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .images-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
-    <h1>20:10</h1>
-    <div class="image-container">
-      <div class="speech-bubble" id="bubble1">God</div>
-      <img src="static/images/Subject.png" alt="Subject" class="square-image">
+    <div class="content-wrapper">
+      <h1>20:10</h1>
+      <div class="images-container">
+        <div class="image-container">
+          <div class="speech-bubble" id="bubble1">God</div>
+          <img src="static/images/Subject.png" alt="Subject" class="square-image">
+        </div>
+        <div class="image-container">
+          <div class="speech-bubble" id="bubble2">God</div>
+          <img src="static/images/Subject 2.png" alt="Subject 2" class="square-image">
+        </div>
+        <div class="button-container" style="margin-top: 20px;">
+        <a href="index.html" class="button">Back Home</a>
+      </div>
     </div>
-    <div class="image-container">
-      <div class="speech-bubble" id="bubble2">God</div>
-      <img src="static/images/Subject 2.png" alt="Subject 2" class="square-image">
-    </div>
-    <a href="index.html" class="button">Back Home</a>
     <script>
       const texts = [
         "God",
