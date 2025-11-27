@@ -3,14 +3,168 @@
   <head>
     <meta charset="utf-8"/>
     <title>Music - JAZZYCAT258</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/static/player/jPlayer-2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
+    <style>
+      @font-face {
+        font-family: 'Urdu Emad Nastaliq';
+        src: url('/static/fonts/Urdu_Emad_Nastaliq/Urdu_Emad_Nastaliq.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      
+      /* Apply font and blue color to all elements */
+      * {
+        font-family: 'Urdu Emad Nastaliq', serif !important;
+        font-size: 12px;
+        color: blue !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+      
+      body {
+        background: #000 url('/static/gifs/Nitro_Blasterz_Heroines_Infinite_Duel_Presents_Waifu_War_C.gif') no-repeat center center fixed !important;
+        background-size: cover !important;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      /* Remove all button styling */
+      button, .jp-controls button, .jp-mute, .jp-play, .jp-pause, .jp-stop, .jp-previous, .jp-next {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 5px 10px !important;
+        margin: 2px !important;
+        cursor: pointer;
+      }
+      
+      /* Remove all backgrounds */
+      .jp-audio, .jp-interface, .jp-gui, .jp-controls, .jp-playlist, .jp-progress {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      
+      /* Style links */
+      a {
+        color: blue !important;
+        text-decoration: none !important;
+      }
+      
+      /* Match heading styles with home page */
+      h1 {
+        color: blue !important;
+        text-decoration: underline !important;
+        display: inline-block !important;
+        padding-bottom: 2px !important;
+        font-size: 24px !important;
+      }
+      
+      h2.author {
+        margin: -15px 0 15px 0 !important;
+        font-size: 1em !important;
+        font-weight: normal !important;
+      }
+      
+      /* Remove bullet points from playlist */
+      .jp-playlist ul {
+        list-style-type: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      
+      .jp-playlist-item {
+        padding: 5px 0 !important;
+      }
+      
+      a:hover {
+        text-decoration: underline !important;
+      }
+      
+      /* Progress bar */
+      .jp-seek-bar, .jp-play-bar, .jp-volume-bar, .jp-volume-bar-value {
+        height: 5px !important;
+        background: rgba(0, 0, 255, 0.2) !important;
+      }
+      
+      .jp-play-bar, .jp-volume-bar-value {
+        background: blue !important;
+      }
+    </style>
   </head>
   <body>
     <h1>Peace be upon you</h1>
     <h2 class="author"><a href="https://www.instagram.com/jazzycat258/" target="_blank">author</a></h2>
+    
     <p>
       <a href="https://youtu.be/lHbEFHJ8Dc4?si=0gyvSgTZZy_uDhcu" target="_blank" rel="noopener noreferrer">1</a>
     </p>
-    <a href="index.html" class="button">Back Home</a>
+
+    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+    <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+      <div class="jp-type-playlist">
+        <div class="jp-gui jp-interface">
+          <div class="jp-controls">
+            <button class="jp-previous" role="button" tabindex="0">previous</button>
+            <button class="jp-play" role="button" tabindex="0">play</button>
+            <button class="jp-next" role="button" tabindex="0">next</button>
+            <button class="jp-stop" role="button" tabindex="0">stop</button>
+          </div>
+          <div class="jp-progress">
+            <div class="jp-seek-bar">
+              <div class="jp-play-bar"></div>
+            </div>
+          </div>
+          <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+          <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+          <div class="jp-volume-controls">
+            <button class="jp-mute" role="button" tabindex="0">mute</button>
+            <div class="jp-volume-bar">
+              <div class="jp-volume-bar-value"></div>
+            </div>
+          </div>
+        </div>
+        <div class="jp-playlist">
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <a href="index.html" style="color: blue; text-decoration: none; margin-top: 20px; display: inline-block;">Back Home</a>
+
+    <script src="/static/player/jPlayer-2.9.2/lib/jquery.min.js"></script>
+    <script src="/static/player/jPlayer-2.9.2/dist/jplayer/jquery.jplayer.min.js"></script>
+    <script src="/static/player/jPlayer-2.9.2/dist/add-on/jplayer.playlist.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        var myPlaylist = new jPlayerPlaylist({
+          jPlayer: "#jquery_jplayer_1",
+          cssSelectorAncestor: "#jp_container_1"
+        }, [
+          {
+            title: "FMA Track",
+            mp3: "/static/songs/fma-172595.mp3"
+          },
+          {
+            title: "The Stark Palace - CroMagnon Man",
+            mp3: "/static/songs/The Stark Palace - CroMagnon Man.mp3"
+          }
+        ], {
+          playlistOptions: {
+            enableRemoveControls: false
+          },
+          swfPath: "/static/player/jPlayer-2.9.2/dist/jplayer",
+          supplied: "mp3",
+          smoothPlayBar: true,
+          keyEnabled: true,
+          solution: "html,flash"
+        });
+      });
+    </script>
   </body>
 </html>

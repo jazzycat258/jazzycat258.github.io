@@ -68,6 +68,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         let isTyping = false;
+        let soundTimeout;
+        
+        // Function to stop the sound
+        function stopSound() {
+            sound.pause();
+            sound.currentTime = 0;
+        }
+        
+        // Function to handle typing activity
+        function handleTypingActivity() {
+            // Stop any currently playing sound and clear any timeouts
+            stopSound();
+            if (soundTimeout) {
+                clearTimeout(soundTimeout);
+                soundTimeout = null;
+            }
+            
+            // Start the sound
+            sound.currentTime = 0;
+            const playPromise = sound.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(e => console.log('Sound playback prevented:', e))
+                    .then(() => {
+                        // Set timeout to stop sound after exactly 8 seconds (8000 milliseconds)
+                        soundTimeout = setTimeout(() => {
+                            stopSound();
+                            soundTimeout = null;
+                        }, 8000);
+                    });
+            }
+        }
         
         answerInput.addEventListener('focus', () => {
             isTyping = true;
@@ -75,12 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
         
         answerInput.addEventListener('blur', () => {
             isTyping = false;
+            stopSound();
+            if (soundTimeout) {
+                clearTimeout(soundTimeout);
+            }
         });
         
         answerInput.addEventListener('input', (e) => {
             if (isTyping && e.inputType === 'insertText') {
-                sound.currentTime = 0; // Reset sound to start
-                sound.play().catch(e => console.log('Sound playback prevented:', e));
+                handleTypingActivity();
             }
         });
         
@@ -89,9 +124,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') {
                 e.preventDefault(); // Prevent form submission
                 showRandomMessage();
-                // Don't clear the input here, let showRandomMessage handle it
-                sound.currentTime = 0; // Reset sound to start
-                sound.play().catch(e => console.log('Sound playback prevented:', e));
+                handleTypingActivity();
+            }
+        });
+        
+        // Stop sound when clicking outside the input
+        document.addEventListener('click', (e) => {
+            if (e.target !== answerInput) {
+                stopSound();
+                if (soundTimeout) {
+                    clearTimeout(soundTimeout);
+                }
             }
         });
     }
