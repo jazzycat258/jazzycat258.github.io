@@ -29,6 +29,21 @@ h1 a {
   pointer-events: none; /* Disable click events on the anchor */
 }
 
+h2.author {
+  margin: -15px 0 15px 0;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+h2.author a {
+  color: blue;
+  text-decoration: none;
+}
+
+h2.author a:hover {
+  text-decoration: underline;
+}
+
 table {
   border-collapse: collapse;
   margin: 20px 0;
