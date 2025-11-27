@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Greatest Inventions - JAZZYCAT258</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="/static/js/soundfx.js" defer></script>
+    <style>
+      .inventions-list {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 0;
+        list-style: none;
+      }
+      .invention-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+      }
+      .add-invention {
+        margin: 20px auto;
+        max-width: 400px;
+        display: flex;
+        gap: 4px;
+      }
+      #new-invention {
+        flex-grow: 1;
+        padding: 4px 8px;
+        font-family: 'Urdu Emad Nastaliq', serif;
+        border: 1px solid #000;
+        background: none;
+        outline: none;
+      }
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        font-family: 'Urdu Emad Nastaliq', serif;
+        font-size: 1.2em;
+        line-height: 1;
+      }
+      button:hover {
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><a href="https://www.instagram.com/jazzycat258/" target="_blank">Peace be upon you</a></h1>
+    <h2>Greatest Inventions</h2>
+    
+    <ul class="inventions-list" id="inventions-list">
+      <!-- Inventions will be added here -->
+    </ul>
+    
+    <div class="add-invention">
+      <input type="text" id="new-invention" placeholder="">
+      <button onclick="addInvention()" style="font-size: 1.5em;">+</button>
+    </div>
+    
+    <div class="buttons">
+      <a href="home.html" class="button">Back to Home</a>
+    </div>
+    
+    <script>
+      // Load saved inventions
+      let inventions = JSON.parse(localStorage.getItem('inventions')) || [];
+      
+      function displayInventions() {
+        const list = document.getElementById('inventions-list');
+        list.innerHTML = inventions.map((invention, index) => `
+          <li class="invention-item">
+            <span>${invention}</span>
+            <button onclick="deleteInvention(${index})">x</button>
+          </li>
+        `).join('');
+      }
+
+      function addInvention() {
+        const input = document.getElementById('new-invention');
+        const title = input.value.trim();
+        
+        if (title) {
+          inventions.push(title);
+          localStorage.setItem('inventions', JSON.stringify(inventions));
+          input.value = '';
+          displayInventions();
+        }
+      }
+
+      function deleteInvention(index) {
+        inventions.splice(index, 1);
+        localStorage.setItem('inventions', JSON.stringify(inventions));
+        displayInventions();
+      }
+
+      // Allow adding with Enter key
+      document.getElementById('new-invention').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          addInvention();
+        }
+      });
+
+      // Initial display
+      displayInventions();
+    </script>
+  </body>
+</html>

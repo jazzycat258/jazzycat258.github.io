@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>20:10 - JAZZYCAT258</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>20:10</h1>
+    <div class="image-container">
+      <div class="speech-bubble" id="bubble1">God</div>
+      <img src="static/images/Subject.png" alt="Subject" class="square-image">
+    </div>
+    <div class="image-container">
+      <div class="speech-bubble" id="bubble2">God</div>
+      <img src="static/images/Subject 2.png" alt="Subject 2" class="square-image">
+    </div>
+    <a href="index.html" class="button">Back Home</a>
+    <script>
+      const texts = [
+        "God",
+        "What do you want",
+        "What’s up",
+        "Fuck you mean what’s up",
+        "You ain’t shit",
+        "Curse is lifted",
+        "Yeah right",
+        "It reminds you of that time",
+        "Stop",
+        "I know",
+        "I don’t even wanna hear or think about it",
+        "Clean",
+        "Tell me you hate me",
+        "Tell me you don’t love me",
+        "Damn it’s been a rough day",
+        "Pass the yuri",
+        "Am i capable of anything?",
+        "Kind of got fired for this",
+        "today i thought of you",
+        "You could just reach out",
+        "I'm not supposed to"
+        
+      ];
+      let index1 = 0;
+      let index2 = 1;
+      setInterval(() => {
+        document.getElementById('bubble1').textContent = texts[index1];
+        document.getElementById('bubble2').textContent = texts[index2];
+        index1 = (index1 + 2) % texts.length;
+        index2 = (index2 + 2) % texts.length;
+      }, 4000); // Change every 4 seconds
+    </script>
+  </body>
+</html>
