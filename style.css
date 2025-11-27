@@ -99,6 +99,48 @@ img {
   text-decoration: underline;
 }
 
+/* Style for I Have Answers title */
+h2.answers-title {
+  color: blue;
+  text-decoration: none;
+  margin: 15px 0 5px 0;
+  font-size: 1.2em;
+  cursor: default;
+  display: block;
+}
+
+/* Input field styles */
+#answer-input {
+  min-width: 300px;
+  width: 80%;
+  max-width: 600px;
+  padding: 15px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Urdu Emad Nastaliq', serif;
+  font-size: 14px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+#answer-input.expanded {
+  white-space: normal;
+  min-height: 80px;
+  height: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  text-overflow: clip;
+  resize: none;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
 
 
 .image-container {
