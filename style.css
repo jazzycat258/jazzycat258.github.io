@@ -15,14 +15,18 @@ body {
 }
 
 h1 {
-  color: black;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-h1 a {
   color: blue;
   text-decoration: underline;
+  cursor: default;
+  display: inline-block; /* To make the underline only as wide as the text */
+  padding-bottom: 2px; /* Add some space between text and underline */
+}
+
+/* Remove any link styling from h1 if it contains an anchor */
+h1 a {
+  color: blue;
+  text-decoration: none;
+  pointer-events: none; /* Disable click events on the anchor */
 }
 
 table {
