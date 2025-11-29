@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Sandbox - JAZZYCAT258</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        position: relative;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+      
+      .draggable-image {
+        position: absolute;
+        cursor: move;
+        z-index: 10;
+      }
+      
+      .draggable-image.dragging {
+        opacity: 0.8;
+        z-index: 1000;
+      }
+      
+      .gravity-toggle {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: inherit;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1002;
+        background: none;
+        border: none;
+        padding: 0;
+      }
+      
+      .gravity-toggle.space-mode {
+        color: #666;
+      }
+      
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="home.html" class="button back-button">Back Home</a>
+    
+    <button id="gravityToggle" class="gravity-toggle" onclick="toggleGravity()">↓</button>
+    
+        
+    <!-- Images from star folder -->
+    <img src="static/star_transparent/1855a2a7182460291aae4adf2180b1cd.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 100px; left: 100px;">
+    <img src="static/star_transparent/318bc9f26895cb123ae1c73c023ef7cc.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 100px; left: 300px;">
+    <img src="static/star_transparent/379980a9920f42c108765e031035bf59.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 100px; left: 500px;">
+    <img src="static/star_transparent/6223686e591aa0299c67bf4172f8dd20.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 100px; left: 700px;">
+    <img src="static/star_transparent/629040e706d9a75420b19d3dccfa71d5.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 250px; left: 100px;">
+    <img src="static/star_transparent/64618ad6b34f4f603b41bb0aee5042b8.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 250px; left: 300px;">
+    <img src="static/star_transparent/64f05fb75b2d4df72e771efec2a053c9.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 250px; left: 500px;">
+    <img src="static/star_transparent/6b99b346e9b1408ea1d477749cfb7a9d.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 250px; left: 700px;">
+    <img src="static/star_transparent/7487a889001fc9f96c1584b25b6b2d7e.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 400px; left: 100px;">
+    <img src="static/star_transparent/7540a38386f64274d9860b3e7904edd3.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 400px; left: 300px;">
+    <img src="static/star_transparent/7a126e0ad567e48372330b5fdc7ddc8d.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 400px; left: 500px;">
+    <img src="static/star_transparent/7f908e059ee7925249e4f77457bd1079.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 400px; left: 700px;">
+    <img src="static/star_transparent/860fbe25d82a0b46b2347201aab2083a.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 550px; left: 100px;">
+    <img src="static/star_transparent/8cc7055ec18975d89bde4af7607aa761.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 550px; left: 300px;">
+    <img src="static/star_transparent/b05fc63d3b4792dead00b7c47cb228c4.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 550px; left: 500px;">
+    <img src="static/star_transparent/c946c468018c42c3bf1dd7af22e353e4.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 550px; left: 700px;">
+    <img src="static/star_transparent/d4534489ec6d98b9c28ad913924b4b86.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 700px; left: 100px;">
+    <img src="static/star_transparent/d4bb51438ab8dfe025ddfe158e0ce36f.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 700px; left: 300px;">
+    <img src="static/star_transparent/e4f6ada311c4f9e3e7b5e06b270925af.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 700px; left: 500px;">
+    <img src="static/star_transparent/ecc9e258a2ea231e5c926c5202a7eb60.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 700px; left: 700px;">
+    <img src="static/star_transparent/f76cd7deb6ca74679258abb273850e8a.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 850px; left: 100px;">
+    <img src="static/star_transparent/f9a58d58e281fea95b77bfbaef0e9b0c.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 850px; left: 300px;">
+    <img src="static/star_transparent/fdd2a29262a13007520b4e52f5e0d873.png" alt="Star Image" class="draggable-image" style="width: 150px; top: 850px; left: 500px;">
+    
+    <script>
+      let isDragging = false;
+      let currentElement = null;
+      let offsetX = 0;
+      let offsetY = 0;
+      let isGravityOn = false;
+      let originalPositions = new Map();
+      
+      // Make all existing images draggable
+      document.addEventListener('DOMContentLoaded', function() {
+        makeImagesDraggable();
+        loadImagePositions();
+        scatterImagesRandomly();
+        saveOriginalPositions();
+      });
+      
+      function makeImagesDraggable() {
+        const images = document.querySelectorAll('.draggable-image');
+        images.forEach(img => {
+          setupDraggable(img);
+        });
+      }
+      
+      function setupDraggable(element) {
+        element.addEventListener('mousedown', startDrag);
+        element.addEventListener('touchstart', startDrag, { passive: false });
+      }
+      
+      function startDrag(e) {
+        e.preventDefault();
+        isDragging = true;
+        currentElement = e.target;
+        currentElement.classList.add('dragging');
+        
+        const rect = currentElement.getBoundingClientRect();
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
+        
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', stopDrag);
+      }
+      
+      function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        
+        const x = clientX - offsetX;
+        const y = clientY - offsetY;
+        
+        currentElement.style.left = x + 'px';
+        currentElement.style.top = y + 'px';
+      }
+      
+      function stopDrag() {
+        if (currentElement) {
+          currentElement.classList.remove('dragging');
+          // Save the position
+          saveImagePosition(currentElement);
+        }
+        isDragging = false;
+        currentElement = null;
+        
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchmove', drag);
+        document.removeEventListener('touchend', stopDrag);
+      }
+      
+      function getImageId(img) {
+        // Extract filename from src path
+        const src = img.src;
+        const filename = src.substring(src.lastIndexOf('/') + 1);
+        return filename;
+      }
+      
+      function saveImagePosition(img) {
+        const id = getImageId(img);
+        const position = {
+          left: img.style.left,
+          top: img.style.top
+        };
+        localStorage.setItem('star_' + id, JSON.stringify(position));
+      }
+      
+      function loadImagePositions() {
+        const images = document.querySelectorAll('.draggable-image');
+        images.forEach(img => {
+          const id = getImageId(img);
+          const savedPosition = localStorage.getItem('star_' + id);
+          if (savedPosition) {
+            const position = JSON.parse(savedPosition);
+            img.style.left = position.left;
+            img.style.top = position.top;
+          }
+        });
+      }
+      
+      function scatterImagesRandomly() {
+        const images = document.querySelectorAll('.draggable-image');
+        const viewportWidth = window.innerWidth - 200; // Leave margin
+        const viewportHeight = window.innerHeight - 200; // Leave margin
+        
+        images.forEach(img => {
+          // Only scatter if no saved position exists
+          const id = getImageId(img);
+          if (!localStorage.getItem('star_' + id)) {
+            const randomLeft = Math.random() * viewportWidth + 'px';
+            const randomTop = Math.random() * viewportHeight + 'px';
+            img.style.left = randomLeft;
+            img.style.top = randomTop;
+            // Save the initial random position
+            saveImagePosition(img);
+          }
+        });
+      }
+      
+      function saveOriginalPositions() {
+        const images = document.querySelectorAll('.draggable-image');
+        images.forEach(img => {
+          const id = getImageId(img);
+          originalPositions.set(id, {
+            left: img.style.left,
+            top: img.style.top
+          });
+        });
+      }
+      
+      function toggleGravity() {
+        const button = document.getElementById('gravityToggle');
+        const images = document.querySelectorAll('.draggable-image');
+        
+        if (!isGravityOn) {
+          // Turn gravity on - stars fall to bottom with impact
+          button.textContent = '↑';
+          button.classList.add('space-mode');
+          
+          images.forEach((img, index) => {
+            const id = getImageId(img);
+            const rect = img.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            const imgHeight = rect.height || 150;
+            
+            // Stagger the fall times for more natural effect
+            const delay = index * 50;
+            
+            setTimeout(() => {
+              // Add falling animation - faster and more dramatic
+              img.style.transition = 'top 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
+              img.style.top = (viewportHeight - imgHeight - 20) + 'px';
+              
+              // Add impact effect when hitting bottom
+              setTimeout(() => {
+                // Sharp bounce effect
+                img.style.transition = 'top 0.1s ease-out';
+                img.style.top = (viewportHeight - imgHeight - 40) + 'px';
+                
+                setTimeout(() => {
+                  img.style.transition = 'top 0.08s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                  img.style.top = (viewportHeight - imgHeight - 15) + 'px';
+                  
+                  setTimeout(() => {
+                    img.style.transition = 'top 0.05s ease-in';
+                    img.style.top = (viewportHeight - imgHeight - 20) + 'px';
+                    
+                    // Remove transition after impact
+                    setTimeout(() => {
+                      img.style.transition = '';
+                    }, 50);
+                  }, 80);
+                }, 100);
+              }, 400);
+            }, delay);
+          });
+          
+          isGravityOn = true;
+        } else {
+          // Turn gravity off - stars rise back up
+          button.textContent = '↓';
+          button.classList.remove('space-mode');
+          
+          images.forEach((img, index) => {
+            const id = getImageId(img);
+            const originalPos = originalPositions.get(id);
+            
+            if (originalPos) {
+              // Stagger the rise times
+              const delay = index * 30;
+              
+              setTimeout(() => {
+                // Animate rising back to original position
+                img.style.transition = 'top 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                img.style.top = originalPos.top;
+                
+                // Remove transition after animation completes
+                setTimeout(() => {
+                  img.style.transition = '';
+                  // Save the restored position
+                  saveImagePosition(img);
+                }, 1200);
+              }, delay);
+            }
+          });
+          
+          isGravityOn = false;
+        }
+      }
+      
+    </script>
+  </body>
+</html>
