@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Pics - JAZZYCAT258</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        background: white;
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        position: relative;
+      }
+      .add-button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+        background: white;
+        z-index: 100;
+        transition: all 0.2s;
+      }
+      .add-button:hover {
+        color: #333;
+        background: #f9f9f9;
+      }
+      .photo {
+        position: absolute;
+        cursor: move;
+        border: 2px solid transparent;
+        max-width: 300px;
+        max-height: 300px;
+        user-select: none;
+        transition: border-color 0.2s;
+      }
+      .photo:hover {
+        border-color: #ccc;
+      }
+      .photo.dragging {
+        opacity: 0.8;
+        z-index: 1000;
+      }
+      .photo.front {
+        z-index: 999;
+        border-color: #333;
+      }
+      .header {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin-bottom: 20px;
+        pointer-events: none;
+      }
+      .back-link {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        color: #666;
+        text-decoration: none;
+        z-index: 1001;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-link">← home</a>
+    
+    <div class="header">
+      <h1>Yayyyyyy</h1>
+      <h2 class="author"><a href="https://www.instagram.com/jazzycat258/" target="_blank">me</a></h2>
+    </div>
+    
+    <div class="add-button" id="addButton">+</div>
+    
+    <script>
+      let photoZIndex = 10;
+      const addButton = document.getElementById('addButton');
+      const body = document.body;
+      let draggedPhoto = null;
+      let dragOffset = { x: 0, y: 0 };
+      
+      // Load saved photos on page load
+      window.addEventListener('load', loadPhotos);
+      
+      // Add button click
+      addButton.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.multiple = true;
+        input.onchange = (e) => {
+          Array.from(e.target.files).forEach(file => {
+            if (file.type.startsWith('image/')) {
+              createPhoto(file);
+            }
+          });
+        };
+        input.click();
+      });
+      
+      // Prevent default drag behaviors
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        body.addEventListener(eventName, preventDefaults, false);
+      });
+      
+      // Handle dropped files
+      body.addEventListener('drop', handleDrop, false);
+      
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
+      function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        Array.from(files).forEach(file => {
+          if (file.type.startsWith('image/')) {
+            createPhoto(file, e.clientX, e.clientY);
+          }
+        });
+      }
+      
+      function createPhoto(file, x = null, y = null) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const photo = document.createElement('img');
+          photo.src = e.target.result;
+          photo.className = 'photo';
+          photo.style.left = (x || Math.random() * (window.innerWidth - 300)) + 'px';
+          photo.style.top = (y || Math.random() * (window.innerHeight - 300)) + 'px';
+          photo.style.zIndex = photoZIndex++;
+          
+          // Mouse events for dragging
+          photo.addEventListener('mousedown', startDrag);
+          photo.addEventListener('click', bringToFront);
+          
+          // Touch events for mobile
+          photo.addEventListener('touchstart', startDrag);
+          photo.addEventListener('touchend', bringToFront);
+          
+          body.appendChild(photo);
+          
+          // Save to localStorage
+          savePhotos();
+        };
+        reader.readAsDataURL(file);
+      }
+      
+      function savePhotos() {
+        const photos = document.querySelectorAll('.photo');
+        const photoData = Array.from(photos).map(photo => ({
+          src: photo.src,
+          left: photo.style.left,
+          top: photo.style.top,
+          zIndex: photo.style.zIndex
+        }));
+        localStorage.setItem('picsPagePhotos', JSON.stringify(photoData));
+      }
+      
+      function loadPhotos() {
+        const savedPhotos = localStorage.getItem('picsPagePhotos');
+        if (savedPhotos) {
+          const photoData = JSON.parse(savedPhotos);
+          photoData.forEach(data => {
+            const photo = document.createElement('img');
+            photo.src = data.src;
+            photo.className = 'photo';
+            photo.style.left = data.left;
+            photo.style.top = data.top;
+            photo.style.zIndex = data.zIndex;
+            
+            // Update z-index counter
+            const zIndex = parseInt(data.zIndex);
+            if (zIndex >= photoZIndex) {
+              photoZIndex = zIndex + 1;
+            }
+            
+            // Mouse events for dragging
+            photo.addEventListener('mousedown', startDrag);
+            photo.addEventListener('click', bringToFront);
+            
+            // Touch events for mobile
+            photo.addEventListener('touchstart', startDrag);
+            photo.addEventListener('touchend', bringToFront);
+            
+            body.appendChild(photo);
+          });
+        }
+      }
+      
+      function bringToFront(e) {
+        e.stopPropagation();
+        // Remove front class from all photos
+        document.querySelectorAll('.photo').forEach(p => p.classList.remove('front'));
+        // Add front class to clicked photo and update z-index
+        this.classList.add('front');
+        this.style.zIndex = photoZIndex++;
+        // Save updated positions
+        savePhotos();
+      }
+      
+      function startDrag(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        draggedPhoto = this;
+        draggedPhoto.classList.add('dragging');
+        
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        
+        const rect = draggedPhoto.getBoundingClientRect();
+        dragOffset.x = clientX - rect.left;
+        dragOffset.y = clientY - rect.top;
+        
+        // Add global move and end listeners
+        if (e.type.includes('touch')) {
+          document.addEventListener('touchmove', drag);
+          document.addEventListener('touchend', endDrag);
+        } else {
+          document.addEventListener('mousemove', drag);
+          document.addEventListener('mouseup', endDrag);
+        }
+      }
+      
+      function drag(e) {
+        if (!draggedPhoto) return;
+        e.preventDefault();
+        
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        
+        draggedPhoto.style.left = (clientX - dragOffset.x) + 'px';
+        draggedPhoto.style.top = (clientY - dragOffset.y) + 'px';
+      }
+      
+      function endDrag() {
+        if (draggedPhoto) {
+          draggedPhoto.classList.remove('dragging');
+          draggedPhoto = null;
+          // Save positions after drag
+          savePhotos();
+        }
+        
+        // Remove global listeners
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', endDrag);
+        document.removeEventListener('touchmove', drag);
+        document.removeEventListener('touchend', endDrag);
+      }
+    </script>
+  </body>
+</html>
