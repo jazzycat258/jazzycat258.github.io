@@ -142,6 +142,8 @@
           // Mouse events for dragging
           photo.addEventListener('mousedown', startDrag);
           photo.addEventListener('click', bringToFront);
+          photo.addEventListener('contextmenu', bringToFront);
+          photo.addEventListener('dblclick', bringToFront);
           
           // Touch events for mobile
           photo.addEventListener('touchstart', startDrag);
@@ -187,6 +189,8 @@
             // Mouse events for dragging
             photo.addEventListener('mousedown', startDrag);
             photo.addEventListener('click', bringToFront);
+            photo.addEventListener('contextmenu', bringToFront);
+            photo.addEventListener('dblclick', bringToFront);
             
             // Touch events for mobile
             photo.addEventListener('touchstart', startDrag);
@@ -199,6 +203,16 @@
       
       function bringToFront(e) {
         e.stopPropagation();
+        
+        // Check for delete request (long press or right click)
+        if (e.type === 'contextmenu' || e.detail === 2) {
+          if (confirm('Delete this photo?')) {
+            this.remove();
+            savePhotos();
+            return;
+          }
+        }
+        
         // Remove front class from all photos
         document.querySelectorAll('.photo').forEach(p => p.classList.remove('front'));
         // Add front class to clicked photo and update z-index
