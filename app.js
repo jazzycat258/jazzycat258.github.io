@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "The message sent is not necessarily the message received.",
             "Because in 799 Charlemagne helped pope leo 3 crush a rebellion in Rome.",
             "Kanye West.",
+            "I dont really have the answers",
             "Stop asking questions that only your neighbor can answer",
             "being high.",
             "It's never ok for someone to put you down.",
